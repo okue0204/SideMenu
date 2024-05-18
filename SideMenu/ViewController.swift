@@ -80,13 +80,8 @@ class ViewController: UIViewController {
         let translationX = sender.translation(in: sideMenuView).x
         switch sender.state {
         case .changed:
-            if sender.velocity(in: sideMenuView).x < -Self.maxSwipeVelocity {
-                sideMenuAppearance = .close
-                return
-            } else {
-                backgroundButton.alpha = calculateMovement(type: .normal, translation: translationX)
-                sideMenuView.transform = CGAffineTransform(translationX: min(0, translationX), y: 0)
-            }
+            backgroundButton.alpha = calculateMovement(type: .normal, translation: translationX)
+            sideMenuView.transform = CGAffineTransform(translationX: min(0, translationX), y: 0)
         case .ended:
             if sender.velocity(in: sideMenuView).x < -Self.maxSwipeVelocity {
                 sideMenuAppearance = .close
@@ -113,13 +108,8 @@ class ViewController: UIViewController {
         let translation = -sideMenuView.bounds.width - -sender.translation(in: sideMenuView).x
         switch sender.state {
         case .changed:
-            if sender.velocity(in: sideMenuView).x > Self.maxSwipeVelocity {
-                sideMenuAppearance = .open
-                return
-            } else {
-                sideMenuView.transform = CGAffineTransform(translationX: min(0, translation), y: 0)
-                backgroundButton.alpha = calculateMovement(type: .edge, translation: translation)
-            }
+            sideMenuView.transform = CGAffineTransform(translationX: min(0, translation), y: 0)
+            backgroundButton.alpha = calculateMovement(type: .edge, translation: translation)
         case .ended:
             if sender.velocity(in: sideMenuView).x > Self.maxSwipeVelocity {
                 sideMenuAppearance = .open
