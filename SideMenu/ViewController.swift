@@ -22,9 +22,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var sideMenuView: SideMenuView!
     @IBOutlet weak var backgroundButton: UIButton!
     
+    private static let maxSwipeVelocity: CGFloat = 500
+    private static let maxAlpha: CGFloat = 0.3
+    private static let animationDuration: CGFloat = 0.25
+    
     private var sideMenuAppearance: SideMenuAppearance = .open {
         didSet {
-            UIView.animate(withDuration: 0.25,
+            UIView.animate(withDuration: Self.animationDuration,
                            delay: 0,
                            options: .curveEaseIn) { [weak self] in
                 guard let self else {
@@ -32,7 +36,7 @@ class ViewController: UIViewController {
                 }
                 switch sideMenuAppearance {
                 case .open:
-                    backgroundButton.alpha = 0.3
+                    backgroundButton.alpha = Self.maxAlpha
                     sideMenuView.transform = .identity
                 case .close:
                     backgroundButton.alpha = 0
@@ -63,12 +67,11 @@ class ViewController: UIViewController {
     
     private func calculateMovement(type: PanGestureType, translation: CGFloat) -> CGFloat {
         // 移動量の割合を求める
-        // 0.3はbackgroundのalphaを最大0.3にしたいから
         switch type {
         case .normal:
-            return min(0.3, ((sideMenuView.bounds.width - -translation) / sideMenuView.bounds.width) * 0.3)
+            return min(Self.maxAlpha, ((sideMenuView.bounds.width - -translation) / sideMenuView.bounds.width) * Self.maxAlpha)
         case .edge:
-            return min(0.3, (-(-translation - sideMenuView.bounds.width) / sideMenuView.bounds.width) * 0.3)
+            return min(Self.maxAlpha, (-(-translation - sideMenuView.bounds.width) / sideMenuView.bounds.width) * Self.maxAlpha)
         }
     }
     
@@ -77,19 +80,29 @@ class ViewController: UIViewController {
         let translationX = sender.translation(in: sideMenuView).x
         switch sender.state {
         case .changed:
-            backgroundButton.alpha = calculateMovement(type: .normal, translation: translationX)
-            sideMenuView.transform = CGAffineTransform(translationX: min(0, translationX), y: 0)
+            if sender.velocity(in: sideMenuView).x < -Self.maxSwipeVelocity {
+                sideMenuAppearance = .close
+                return
+            } else {
+                backgroundButton.alpha = calculateMovement(type: .normal, translation: translationX)
+                sideMenuView.transform = CGAffineTransform(translationX: min(0, translationX), y: 0)
+            }
         case .ended:
-        sideMenuAppearance = {
-                return switch translationX {
-                case ..<(-sideMenuView.bounds.width * 0.5):
-                        .close
-                case (-sideMenuView.bounds.width * 0.5)...:
-                        .open
-                default:
-                        .close
-                }
-            }()
+            if sender.velocity(in: sideMenuView).x < -Self.maxSwipeVelocity {
+                sideMenuAppearance = .close
+                return
+            } else {
+                sideMenuAppearance = {
+                    return switch translationX {
+                    case ..<(-sideMenuView.bounds.width * 0.5):
+                            .close
+                    case (-sideMenuView.bounds.width * 0.5)...:
+                            .open
+                    default:
+                            .close
+                    }
+                }()
+            }
         default:
             break
         }
@@ -100,19 +113,28 @@ class ViewController: UIViewController {
         let translation = -sideMenuView.bounds.width - -sender.translation(in: sideMenuView).x
         switch sender.state {
         case .changed:
-            backgroundButton.alpha = calculateMovement(type: .edge, translation: translation)
-            sideMenuView.transform = CGAffineTransform(translationX: min(0, translation), y: 0)
+            if sender.velocity(in: sideMenuView).x > Self.maxSwipeVelocity {
+                sideMenuAppearance = .open
+                return
+            } else {
+                sideMenuView.transform = CGAffineTransform(translationX: min(0, translation), y: 0)
+                backgroundButton.alpha = calculateMovement(type: .edge, translation: translation)
+            }
         case .ended:
-        sideMenuAppearance = {
-                return switch translation {
-                case ..<(-sideMenuView.bounds.width * 0.5):
-                        .close
-                case (-sideMenuView.bounds.width * 0.5)...:
-                        .open
-                default:
-                        .close
-                }
-            }()
+            if sender.velocity(in: sideMenuView).x > Self.maxSwipeVelocity {
+                sideMenuAppearance = .open
+            } else {
+                sideMenuAppearance = {
+                    return switch translation {
+                    case ..<(-sideMenuView.bounds.width * 0.5):
+                            .close
+                    case (-sideMenuView.bounds.width * 0.5)...:
+                            .open
+                    default:
+                            .close
+                    }
+                }()
+            }
         default:
             break
         }
