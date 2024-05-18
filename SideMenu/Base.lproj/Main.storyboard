@@ -1,24 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="SideMenu" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Z3-7h-3mk">
+                                <rect key="frame" x="0.0" y="59" width="393" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rH7-ld-7xP">
+                                        <rect key="frame" x="12" y="14" width="24" height="22"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" image="sidebar.left" catalog="system"/>
+                                        <connections>
+                                            <action selector="didTapSideMenuButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3NA-5Q-Dip"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="6dH-Ng-ldd"/>
+                                    <constraint firstItem="rH7-ld-7xP" firstAttribute="centerY" secondItem="2Z3-7h-3mk" secondAttribute="centerY" id="HR6-KX-0TS"/>
+                                    <constraint firstItem="rH7-ld-7xP" firstAttribute="leading" secondItem="2Z3-7h-3mk" secondAttribute="leading" constant="12" id="SUl-rf-RNj"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wzv-yH-UpA">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <connections>
+                                    <action selector="didTapBackgroundButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pQk-KL-4fk"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eDI-ji-nGp" customClass="SideMenuView" customModule="SideMenu" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="313" height="852"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="wzv-yH-UpA" secondAttribute="bottom" id="7xR-MG-Ox0"/>
+                            <constraint firstItem="wzv-yH-UpA" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="961-Pd-g2N"/>
+                            <constraint firstItem="2Z3-7h-3mk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="If7-D8-4cy"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="eDI-ji-nGp" secondAttribute="trailing" constant="80" id="Ilf-9N-cuR"/>
+                            <constraint firstItem="eDI-ji-nGp" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Jgl-ZE-OI7"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="wzv-yH-UpA" secondAttribute="trailing" id="PwO-gs-Fls"/>
+                            <constraint firstItem="wzv-yH-UpA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="deV-CA-2Gz"/>
+                            <constraint firstAttribute="bottom" secondItem="eDI-ji-nGp" secondAttribute="bottom" id="ic1-tX-I3X"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="2Z3-7h-3mk" secondAttribute="trailing" id="nlB-eo-DFp"/>
+                            <constraint firstItem="eDI-ji-nGp" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="oVi-Ab-8IV"/>
+                            <constraint firstItem="2Z3-7h-3mk" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="v6A-MJ-LmF"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="backgroundButton" destination="wzv-yH-UpA" id="Qvl-Jt-vhU"/>
+                        <outlet property="sideMenuView" destination="eDI-ji-nGp" id="7mH-Ev-dgO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="138.1679389312977" y="-2.1126760563380285"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="sidebar.left" catalog="system" width="128" height="93"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>
